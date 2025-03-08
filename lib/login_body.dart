@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:login_page_16/login_page_16/controller.dart';
+import 'package:login_page_16/login_page_16/sign_up_page.dart';
 
 import 'login_page_16/home_screen.dart';
 
@@ -17,6 +18,7 @@ class LoginBody extends StatefulWidget {
 class _LoginBodyState extends State<LoginBody> {
   final FilledText = GlobalKey<FormState>();
   bool eyebutton = true;
+  bool chekboxbutton = false;
   TextEditingController mailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   @override
@@ -47,7 +49,6 @@ class _LoginBodyState extends State<LoginBody> {
               padding: const EdgeInsets.symmetric(horizontal: 50),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 22,
                 children: [
                   Text(
                     "Login",
@@ -56,6 +57,9 @@ class _LoginBodyState extends State<LoginBody> {
                       fontWeight: FontWeight.bold,
                       fontSize: 55,
                     ),
+                  ),
+                  SizedBox(
+                    height: 15,
                   ),
                   TextFormField(
                     controller: mailController,
@@ -80,6 +84,9 @@ class _LoginBodyState extends State<LoginBody> {
                         return "wrong email.";
                       }
                     },
+                  ),
+                  SizedBox(
+                    height: 15,
                   ),
                   TextFormField(
                     controller: passwordController,
@@ -114,8 +121,41 @@ class _LoginBodyState extends State<LoginBody> {
                       }
                     },
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Checkbox(
+                            value: chekboxbutton,
+                            activeColor: Colors.green,
+                            onChanged: (bool) {
+                              chekboxbutton = !chekboxbutton;
+                              setState(() {});
+                            },
+                          ),
+                          Text(
+                            "Remember me",
+                            style: TextStyle(color: Colors.black, fontSize: 18),
+                          ),
+                        ],
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(context,
+                                MaterialPageRoute(builder: (c) => SignUp()));
+                          },
+                          child: Text(
+                            "Sign Up",
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 18,
+                            ),
+                          ))
+                    ],
+                  ),
                   SizedBox(
-                    height: 1,
+                    height: 20,
                   ),
                   InkWell(
                     onTap: () async {
@@ -127,8 +167,9 @@ class _LoginBodyState extends State<LoginBody> {
                           mail: '${mailController.text}',
                           password: '${passwordController.text}');
                       log("========$status");
-                      if(status){
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (c)=> SecondScreen()));
+                      if (status) {
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (c) => SecondScreen()));
                       }
                     },
                     child: Card(
@@ -145,7 +186,7 @@ class _LoginBodyState extends State<LoginBody> {
                                 fontWeight: FontWeight.bold),
                           )),
                         )),
-                  )
+                  ),
                 ],
               ),
             )
